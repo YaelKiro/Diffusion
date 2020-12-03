@@ -9,12 +9,12 @@ function [C,C_tot] = FDM_PDE_Diff_Diamonds(Inp)
 
 %Parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% UNITS HERE ARE A SUGGESTION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-R=Inp(1); %radius of diamond in cm
-time=Inp(2); %time in G years
-D=Inp(3); %Diffusion coefficient in cm2/s
+R=Inp(1);               %radius of diamond in cm
+time=Inp(2);            %time in G years
+D=Inp(3);               %Diffusion coefficient in cm2/s
 D=D*3600*24*365.26*1e9; % transfer to units D - cm2/Gy
-U8=Inp(4); %mol/g
-k=Inp(5); %Th/U molar ratio
+U8=Inp(4);              %238U mol/g
+k=Inp(5);               %Th/U molar ratio
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,13 +26,13 @@ Cm=Inp(7); % boundary conditions, He concentration in mantle
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Numerical parameters for discretization
 td=Inp(8); %temporal discretization - number of time steps
-N=Inp(9); %spatial discretization - number of nodes
+N=Inp(9);  %spatial discretization - number of nodes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 production=Inp(10); % if He (4He) is produced by radioactive decay set - 1, for 3He set - 0
 %%%%%%%%%% DECAY CONSTANTS %%%%%%%%%%%%%%%%%%
-l8=1.5513e-1; %238U decay constant 1/Gy
-l5=9.8485e-1; %235U decay constant 1/Gy
+l8=1.5513e-1;  %238U decay constant 1/Gy
+l5=9.8485e-1;  %235U decay constant 1/Gy
 l2=0.49475e-1; %232Th decay constant 1/Gy
 a1=U8*8*l8;
 a2=7/137.88*U8*l5;
@@ -42,9 +42,9 @@ a3=U8*k*6*l2;
 
 %FINITE DIFFERENCE METHOD - CRANK-NICOLSON %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-dr=R/N; % Size of element (cm)
-dt=time/td; % Size of time step (Gy)
-r=[dr:dr:(R-dr)]; % spatial array
+dr=R/N;             % Size of element (cm)
+dt=time/td;         % Size of time step (Gy)
+r=[dr:dr:(R-dr)];   % spatial array
 
 % Building spatial matrices
 %%%% SEE MATRICES IN METHOD SECTION AT WEISS ET AL. 2021, NATURE COMMUNICATIONS
@@ -52,7 +52,7 @@ AA=zeros(N-1,N-1);
 
 % For r=0 (r(1))%%%%%%%%%%
 rr=r(1);
-rad=1/rr; % sphere coordinates term
+rad=1/rr;                % sphere coordinates term
 A1=1/2*(rad-1/dr);
 A2=dr/(D*dt)+1/dr;
 A3=-1/2*(rad+1/dr);
@@ -70,7 +70,7 @@ BB(1,2)=B3;
 % Spatial loop
 for i=2:(N-2)
     rr=r(i);
-    rad=1/rr; % sphere coordinates term
+    rad=1/rr;            % sphere coordinates term
     A1=1/2*(rad-1/dr);
     A2=dr/(D*dt)+1/dr;
     A3=-1/2*(rad+1/dr);
@@ -91,7 +91,7 @@ end
 
 % For R=r
 rr=r(N-1);
-rad=1/rr; % sphere coordinates term
+rad=1/rr;               % sphere coordinates term
 A1=1/2*(rad-1/dr);
 A2=dr/(D*dt)+1/dr;
 A3=-1/2*(rad+1/dr);
@@ -108,9 +108,9 @@ BB(N-1,N-1)=B2;
 CN=zeros(N-1,1);
 CN(N-1,1)=2*Cm*A3; % vector dealing with boundary conditions at r=R, see detail in method section at Weiss et al., 2021, NCM
 
-C(1:(N-1),1)=C0;  % initial conditions
+C(1:(N-1),1)=C0;   % initial conditions
 
-%Cbw(1:(N-1),td+1)=Cp;
+
 t=0:time/td:time;
 f=0; % production of He term
 
