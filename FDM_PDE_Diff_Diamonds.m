@@ -1,5 +1,8 @@
 % Crank-Nicolson method for calculating diffusion equation for diffusion of
 % He in diamonds together with build up of 4He from radioactive decay of U and Th
+% This model was generated for Weiss et al., 2021, 
+% Helium in diamonds unravels over a billion years of craton metasomatism, Nature Communications
+% Please cite Weiss et al., 2021 if you use this model.
 function [C,C_tot] = FDM_PDE_Diff_Diamonds(Inp)
 %Inp is an array of all the input parameters that includes boundary and initial
 %conditions and numerical parameters.
