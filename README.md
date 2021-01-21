@@ -5,4 +5,4 @@
 
 - An example of an input dataset to demo the software code can be found in supplementary data table 1 at Weiss et al., 2021.
 - The code runs in MATLAB
-- Instructions to run the code are documented in the code file. 
+- Instructions to run the code and the expected output are documented in the code file. 
